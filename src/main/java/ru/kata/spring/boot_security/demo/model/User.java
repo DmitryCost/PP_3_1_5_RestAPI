@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -25,12 +24,9 @@ public class User implements UserDetails {
     private String surname;
 
     @Column(name = "email", unique = true)
-    @Email(message = "Email should be valid")
     private String email;
 
     @Column(name = "password")
-    @NotEmpty(message = "Password should not be empty")
-    @Size(min = 6, message = "Password should be 6 or more characters")
     private String password;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -40,6 +36,14 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    public String roleToString() {
+        return roles.stream()
+                .map(Role::getNameNotPrefix)
+                .reduce((x, y) -> x +", " + y)
+                .orElse("");
+
+    }
 
     public Set<Role> getRoles () {
         return roles;

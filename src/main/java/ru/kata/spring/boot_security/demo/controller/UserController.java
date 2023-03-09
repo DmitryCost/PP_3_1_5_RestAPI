@@ -31,7 +31,7 @@ public class UserController {
         return "user";
     }
     @GetMapping(value = "/admin/new")
-    public String newUser(/*@ModelAttribute("User") User user*/ Model model) {
+    public String newUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.getListRoles());
         return "authentication/registration";
