@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Set;
 
@@ -17,11 +16,13 @@ public class User implements UserDetails {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "age")
+    private Long age;
 
     @Column(name = "email", unique = true)
     private String email;
@@ -29,7 +30,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -57,9 +58,10 @@ public class User implements UserDetails {
 
     }
 
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
-        this.surname = surname;
+    public User(String firstName, String lastName, Long age, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
         this.email = email;
         this.password = password;
     }
@@ -72,20 +74,28 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
     }
 
     public String getEmail() {
