@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.kata.spring.boot_security.demo.DTO.UserDTO;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -58,12 +59,22 @@ public class User implements UserDetails {
 
     }
 
-    public User(String firstName, String lastName, Long age, String email, String password) {
+    public User(String firstName, String lastName, Long age, String email, String password, Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
         this.password = password;
+        this.roles = roles;
+    }
+    public  User(UserDTO userDTO) {
+        this.id = userDTO.getId();
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.age = userDTO.getAge();
+        this.email = userDTO.getEmail();
+        this.password = userDTO.getPassword();
+        this.roles = userDTO.getRoles();
     }
 
     public Long getId() {
@@ -114,7 +125,6 @@ public class User implements UserDetails {
         return roles;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
