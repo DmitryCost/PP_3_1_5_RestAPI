@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.DTO.UserDTO;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -26,6 +27,10 @@ public class UserRestController {
     public ResponseEntity<List<UserDTO>> getUsersTable () {
         List<UserDTO> list = userService.findAll();
         return ResponseEntity.ok(list);
+    }
+    @GetMapping("api/admin/roles")
+    public ResponseEntity<List<Role>> getRoles() {
+        return ResponseEntity.ok(roleService.getListRoles());
     }
     @PostMapping()
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
